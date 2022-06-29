@@ -10,7 +10,7 @@ Make sure that you have the `simple-http-server` crate installed in your machine
 
 ```bash
     # This is to be done on each crate in the multi-crate repo e.g. in the forces directory
-    wasm-pack build --target web
+    cargo make --makefile Dev.toml dev
 ```
 
 To see the examples locally you can run the installed **simple-http-server**

@@ -1,0 +1,4 @@
+[tasks.dev]
+command = "wasm-pack"
+args = ["build", "--target", "web"]
+watch = { no_git_ignore = false, watch = ["./src/"] }
