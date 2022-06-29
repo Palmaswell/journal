@@ -2,6 +2,8 @@
 name = "forces"
 version = "0.1.0"
 edition = "2021"
+authors = ["Maurico <mauricio@woodlikeocean.com>"]
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -11,13 +13,14 @@ crate-type = ["cdylib"]
 [dependencies]
 wasm-bindgen = "0.2.81"
 
-
 [dependencies.web-sys]
 version = "0.3.4"
 features = [
+  'CanvasRenderingContext2d',
   'Document',
   'Element',
   'HtmlElement',
+  'ImageData',
   'Node',
   'Window',
 ]

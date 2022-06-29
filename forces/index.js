@@ -5,9 +5,9 @@
 // will "boot" the module and make it ready to use. Currently browsers
 // don't support natively imported WebAssembly as an ES module, but
 // eventually the manual initialization won't be required!
-import init, { add } from "./pkg/forces.js";
+import init, { add, draw } from "./pkg/forces.js";
 
-async function run() {
+(async () => {
   // First up we need to actually load the wasm file, so we use the
   // default export to inform it where the wasm file is located on the
   // server, and then we wait on the returned promise to wait for the
@@ -34,12 +34,13 @@ async function run() {
   // Also note that the promise, when resolved, yields the wasm module's
   // exports which is the same as importing the `*_bg` module in other
   // modes
-  await init();
+  try {
+    await init();
+  } catch (err) {
+    console.error(err, "unable to load wasm file");
+  }
 
-  // And afterwards we can use all the functionality defined in wasm.
-  const result = add(1, 2);
-  console.log(`1 + 2 = ${result}`);
-  if (result !== 3) throw new Error("wasm addition doesn't work!");
-}
-
-run();
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+  draw(ctx);
+})();
