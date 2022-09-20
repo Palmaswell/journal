@@ -11,7 +11,9 @@ license = "MIT"
 crate-type = ["cdylib"]
 
 [dependencies]
-wasm-bindgen = "0.2.81"
+wasm-bindgen = "0.2.83"
+js-sys = "0.3.55"
+nalgebra = "0.31.1"
 
 [dependencies.web-sys]
 version = "0.3.4"

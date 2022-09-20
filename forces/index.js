@@ -5,7 +5,20 @@
 // will "boot" the module and make it ready to use. Currently browsers
 // don't support natively imported WebAssembly as an ES module, but
 // eventually the manual initialization won't be required!
-import init, { add, draw } from "./pkg/forces.js";
+import init, { get_coordinates } from "./pkg/forces.js";
+
+const ITEM_COUNT = 1;
+
+function loopHandler(uInt32Arr) {
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  const loop = (timestamp) => {
+    requestAnimationFrame(loop);
+  };
+
+  return loop;
+}
 
 (async () => {
   // First up we need to actually load the wasm file, so we use the
@@ -42,5 +55,7 @@ import init, { add, draw } from "./pkg/forces.js";
 
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
-  draw(ctx);
+
+  const loop = loopHandler(get_coordinates(ctx));
+  requestAnimationFrame(loop);
 })();

@@ -1,6 +1,17 @@
 use std::f64;
 use wasm_bindgen::prelude::*;
 use web_sys::{CanvasRenderingContext2d};
+use js_sys::{Uint32Array};
+
+struct State {
+    width: u32,
+    height: u32,
+    coordinates: Vec<i32>,
+    data_ptr: *mut u32,
+    data_len: usize,
+    data_capacity: usize,
+}
+
 
 // Called when the wasm module is instantiated
 #[wasm_bindgen(start)]
@@ -27,26 +38,23 @@ extern "C" {
 }
 
 #[wasm_bindgen]
-pub fn draw(ctx: &CanvasRenderingContext2d) {
+pub fn get_coordinates(ctx: &CanvasRenderingContext2d) -> Uint32Array {
     
     ctx.begin_path();
 
     // Draw the outer circle.
     ctx
-        .arc(250.0, 250.0, 70.0, 0.0, f64::consts::PI * 2.0)
+        .arc(450.0, 250.0, 80.0, 0.0, f64::consts::PI * 2.0)
         .unwrap();
     ctx.set_fill_style(&"rgb(247, 37, 133)".into());
     ctx.fill();
     ctx.stroke();
     ctx.close_path();
 
-    log(ctx, "hellow world ???????????????222444");
+
+    let mut vec = Vec::new();
+    vec.push(1);
+    vec.push(2);
+
+    Uint32Array::from(&vec[..])
 }
-
-#[wasm_bindgen]
-pub fn add(a: u32, b: u32) -> u32 {
-    a + b
-}
-
-
-
