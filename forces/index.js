@@ -5,14 +5,28 @@
 // will "boot" the module and make it ready to use. Currently browsers
 // don't support natively imported WebAssembly as an ES module, but
 // eventually the manual initialization won't be required!
-import init, { get_coordinates } from "./pkg/forces.js";
+import init, { get_system, get_coordinates } from "./pkg/forces.js";
+const PARTICLE_ELEMENTS = 4;
 
-const ITEM_COUNT = 1;
+const drawInitialSystem = (ctx, system) => {
+  for (let idx = 0; idx < system.length; idx += PARTICLE_ELEMENTS) {
+    const x = system[idx];
+    const y = system[idx + 1];
+    const width = system[idx + 2];
+    const height = system[idx + 3];
+
+    ctx.beginPath();
+    ctx.arc(x, y, width, 0, 2 * Math.PI);
+    ctx.fillStyle = "rgb(247, 37, 133)";
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+  }
+
+  return ctx;
+};
 
 function loopHandler(uInt32Arr) {
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
-
   const loop = (timestamp) => {
     requestAnimationFrame(loop);
   };
@@ -54,7 +68,9 @@ function loopHandler(uInt32Arr) {
   }
 
   const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
+  let ctx = canvas.getContext("2d");
+  const system = get_system();
+  ctx = drawInitialSystem(ctx, system);
 
   const loop = loopHandler(get_coordinates(ctx));
   requestAnimationFrame(loop);
